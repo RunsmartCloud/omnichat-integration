@@ -33,6 +33,9 @@ define(['N/ui/dialog', '../custom-module/rscp_omi_translations_md'],
       if (fieldId !== 'custevent_rscp_omi_order_id') return
 
       const currentRecord = context.currentRecord
+
+      if (!currentRecord.id) return
+
       const orderId = currentRecord.getValue({ fieldId: fieldId })
 
       if (orderId) {
