@@ -43,7 +43,7 @@ define(['N/search', 'N/record'],
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_status',
-        value: orderData.status
+        value: _getStatusTranslation(orderData.status)
       })
 
       orderRecord.setValue({
@@ -53,7 +53,7 @@ define(['N/search', 'N/record'],
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_payment_method',
-        value: orderData.paymentMethod
+        value: _getPaymentMethodTranslation(orderData.paymentMethod)
       })
 
       orderRecord.setValue({
@@ -72,6 +72,11 @@ define(['N/search', 'N/record'],
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_cust_name',
+        value: customerData.name + (customerData.lastName || '')
+      })
+
+      orderRecord.setValue({
+        fieldId: 'custrecord_rscp_omi_ord_cust_firstname',
         value: customerData.name
       })
 
@@ -94,7 +99,7 @@ define(['N/search', 'N/record'],
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_cust_gender',
-        value: customerData.gender
+        value: _getGenderTranslation(customerData.gender)
       })
 
       orderRecord.setValue({
@@ -198,6 +203,56 @@ define(['N/search', 'N/record'],
         .getRange({ start: 0, end: 1 })
 
       return orderResults.length > 0 ? orderResults[0] : null
+    }
+
+    /**
+     * Get Status translation
+     * @param {string} status
+     * @returns {*}
+     * @private
+     */
+    function _getStatusTranslation (status) {
+      const statusTranslationTable = {
+        'OPEN': 'Criado',
+        'WAITING': 'Aguardando pagamento',
+        'PAID': 'Pago',
+        'NOT_PAID': 'Não pago',
+        'ERROR': 'Erro',
+        'CANCELLED': 'Cancelado',
+        'PACKAGED': 'Empacotado',
+        'SHIPPED': 'Enviado',
+        'DELIVERED': 'Entregue'
+      }
+      return statusTranslationTable[status] || status
+    }
+
+    /**
+     * Get Gender translation
+     * @param {string} gender
+     * @returns {*}
+     * @private
+     */
+    function _getGenderTranslation (gender) {
+      const genderTranslationTable = {
+        'male': 'Masculino',
+        'female': 'Feminino'
+      }
+      return genderTranslationTable[gender] || gender
+    }
+
+    /**
+     * Get Payment Method translation
+     * @param {string} paymentMethod
+     * @returns {*}
+     * @private
+     */
+    function _getPaymentMethodTranslation (paymentMethod) {
+      const paymentMethodTranslationTable = {
+        'CREDITCARD': 'Cartão de crédito',
+        'BOLETO': 'Boleto',
+        'MULTI_BOLETO': 'Multi-Boleto'
+      }
+      return paymentMethodTranslationTable[paymentMethod] || paymentMethod
     }
 
     return {

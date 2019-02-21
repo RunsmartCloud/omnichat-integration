@@ -3,8 +3,8 @@
  * @NScriptType UserEventScript
  * @NModuleScope SameAccount
  */
-define(['N/search', 'N/record', '../custom-module/rscp_omi_api_wrapper_md', '../custom-module/rscp_omi_rec_wrapper_md'],
-  function (search, record, omnichatApiWrapper, omnichatRecWrapper) {
+define(['N/runtime', 'N/search', 'N/record', '../custom-module/rscp_omi_api_wrapper_md', '../custom-module/rscp_omi_rec_wrapper_md'],
+  function (runtime, search, record, omnichatApiWrapper, omnichatRecWrapper) {
     /**
      * Function definition to be triggered before record is loaded.
      *
@@ -14,7 +14,8 @@ define(['N/search', 'N/record', '../custom-module/rscp_omi_api_wrapper_md', '../
      * @param {Form} context.form - Current form
      */
     function beforeLoad (context) {
-      if (context.type !== context.UserEventType.CREATE) return
+      if (context.type !== context.UserEventType.CREATE ||
+        runtime.executionContext !== runtime.ContextType.USER_INTERFACE) return
 
       const omnichatOrderId = context.request.parameters.omnichat_order
 
@@ -37,7 +38,7 @@ define(['N/search', 'N/record', '../custom-module/rscp_omi_api_wrapper_md', '../
         // Create customer if not exists.
         const orderRecordColumns = [
           'custrecord_rscp_omi_ord_cust_email',
-          'custrecord_rscp_omi_ord_cust_name',
+          'custrecord_rscp_omi_ord_cust_firstname',
           'custrecord_rscp_omi_ord_cust_lastname',
           'custrecord_rscp_omi_ord_cust_phone'
         ]
