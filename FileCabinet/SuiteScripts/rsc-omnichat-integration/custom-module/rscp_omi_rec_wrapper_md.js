@@ -46,10 +46,12 @@ define(['N/search', 'N/record'],
         value: _getStatusTranslation(orderData.status)
       })
 
-      orderRecord.setValue({
-        fieldId: 'custrecord_rscp_omi_ord_salesperson_name',
-        value: orderData.salesPerson.name
-      })
+      if (orderData.salesPerson) {
+        orderRecord.setValue({
+          fieldId: 'custrecord_rscp_omi_ord_salesperson_name',
+          value: orderData.salesPerson.name
+        })
+      }
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_payment_method',
