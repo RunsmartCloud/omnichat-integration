@@ -8,9 +8,10 @@ define(['N/search', 'N/record'],
      * Create/Update a order.
      *
      * @param {object} orderData
+     * @param {object} customerData
      * @returns {number}
      */
-    function createUpdateOrder (orderData) {
+    function createUpdateOrder (orderData, customerData) {
       var orderRecord
 
       const order = findOrder(orderData.orderId)
@@ -70,7 +71,7 @@ define(['N/search', 'N/record'],
         }, '')
       })
 
-      const customerData = orderData.customer
+      // const customerData = orderData.customer
 
       orderRecord.setValue({
         fieldId: 'custrecord_rscp_omi_ord_cust_name',

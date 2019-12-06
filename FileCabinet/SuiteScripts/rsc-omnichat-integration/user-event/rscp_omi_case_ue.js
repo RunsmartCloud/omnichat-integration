@@ -28,7 +28,8 @@ define(['N/runtime', 'N/search', 'N/record', '../custom-module/rscp_omi_api_wrap
         }
 
         if (order) {
-          orderRecordData.id = omnichatRecWrapper.createUpdateOrder(order)
+          const cust = omnichatApiWrapper.getCustomer(order.customerId)
+          orderRecordData.id = omnichatRecWrapper.createUpdateOrder(order, cust)
         } else {
           orderRecordData.id = omnichatRecWrapper.findOrder(omnichatOrderId)
         }

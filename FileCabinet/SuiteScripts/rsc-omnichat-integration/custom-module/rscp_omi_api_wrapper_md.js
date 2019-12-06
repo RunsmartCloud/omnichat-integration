@@ -28,6 +28,29 @@ define(['N/url', 'N/https'],
     }
 
     /**
+     * Get customer.
+     *
+     * @param {string} id
+     */
+    function getCustomer (id) {
+      const omnichatResponse = https.get({
+        url: _getCommunicatorEndpoint({
+          endpoint: '/customers',
+          filter: _buildFilter({ objectId: id })
+        })
+      })
+
+      if (omnichatResponse.code === 200) {
+        const customers = JSON.parse(omnichatResponse.body)
+        if (customers.length > 0) {
+          return customers[0]
+        }
+      }
+
+      return null
+    }
+
+    /**
      * Return the communicator endpoint.
      *
      * @param {object} parameters
@@ -55,6 +78,7 @@ define(['N/url', 'N/https'],
     }
 
     return {
-      'getOrder': getOrder
+      'getOrder': getOrder,
+      'getCustomer': getCustomer
     }
   })
